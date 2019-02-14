@@ -6,6 +6,18 @@ import (
 	"github.com/schmorrison/Zoho"
 )
 
+type ModuleResponseError struct {
+	Code    string `json:"code"`
+	Details struct {
+	} `json:"details"`
+	Message string `json:"message"`
+	Status  string `json:"status"`
+}
+
+func (m ModuleResponseError) Error() string {
+	return fmt.Sprintf("%v", m)
+}
+
 // GetModules returns the list of modules available in the CRM account
 // https://www.zoho.com/crm/help/api/v2/#Modules-APIs
 func (c *API) GetModules() (data ModulesResponse, err error) {
@@ -19,6 +31,10 @@ func (c *API) GetModules() (data ModulesResponse, err error) {
 	err = c.Zoho.HTTPRequest(&endpoint)
 	if err != nil {
 		return ModulesResponse{}, fmt.Errorf("Failed to retrieve modules: %s", err)
+	}
+
+	if v, ok := endpoint.ResponseData.(*ModuleResponseError); ok {
+		return ModulesResponse{}, v
 	}
 
 	if v, ok := endpoint.ResponseData.(*ModulesResponse); ok {
