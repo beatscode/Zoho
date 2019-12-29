@@ -22,6 +22,9 @@ type TokenLoaderSaver interface {
 // SaveTokens will check for a provided 'TokenManager' interface
 // if one exists it will use its provided method
 func (z Zoho) SaveTokens(t AccessTokenResponse) error {
+	if z.oauth.clientID == "" {
+		return errors.New("Invalid Token, will not save")
+	}
 	if z.tokenManager != nil {
 		return z.tokenManager.SaveTokens(t)
 	}
