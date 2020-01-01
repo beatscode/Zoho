@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -26,6 +27,9 @@ type Parameter string
 
 // HTTPRequest is the function which actually performs the request to a Zoho endpoint as specified by the provided endpoint
 func (z *Zoho) HTTPRequest(endpoint *Endpoint) (err error) {
+	defer func() {
+		log.Println("Response Data", endpoint.ResponseData)
+	}()
 	if reflect.TypeOf(endpoint.ResponseData).Kind() != reflect.Ptr {
 		return fmt.Errorf("Failed, you must pass a pointer in the ResponseData field of endpoint")
 	}
