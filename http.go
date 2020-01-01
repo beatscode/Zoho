@@ -74,6 +74,9 @@ func (z *Zoho) HTTPRequest(endpoint *Endpoint) (err error) {
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
+	defer func() {
+		log.Println("Response Data Bytes", string(body))
+	}()
 	if err != nil {
 		return fmt.Errorf("Failed to read body of response for %s: got status %s: %s", endpoint.Name, resolveStatus(resp), err)
 	}
