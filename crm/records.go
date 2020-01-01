@@ -1,10 +1,11 @@
 package crm
 
 import (
+	zoho "com.drleonardo/zohoapi"
 	"fmt"
 	"time"
 
-	"github.com/schmorrison/Zoho"
+	"github.com/beatscode/Zoho"
 )
 
 // ListRecords will return a list of the records provided in the request field, and specified by the module

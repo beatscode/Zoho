@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/schmorrison/Zoho"
+	"github.com/beatscode/Zoho"
 )
 
 type crmModule string

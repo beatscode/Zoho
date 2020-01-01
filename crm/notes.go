@@ -3,7 +3,7 @@ package crm
 import (
 	"fmt"
 
-	"github.com/schmorrison/Zoho"
+	"github.com/beatscode/Zoho"
 )
 
 // GetNotes returns a list of all notes

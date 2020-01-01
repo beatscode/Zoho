@@ -3,7 +3,7 @@
 package expense
 
 import (
-	"github.com/schmorrison/Zoho"
+	"github.com/beatscode/Zoho"
 	"math/rand"
 )
 
