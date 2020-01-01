@@ -500,21 +500,22 @@ func (c *API) ConvertLead(request ConvertLeadData, ID string) (data ConvertLeadR
 
 // ConvertLeadData is the data provided to ConvertLead
 type ConvertLeadData struct {
-	Data []struct {
-		Overwrite            bool   `json:"overwrite,omitempty"`
-		NotifyLeadOwner      bool   `json:"notify_lead_owner,omitempty"`
-		NotifyNewEntityOwner bool   `json:"notify_new_entity_owner,omitempty"`
-		Accounts             string `json:"Accounts,omitempty"`
-		Contacts             string `json:"Contacts,omitempty"`
-		AssignTo             string `json:"assign_to,omitempty"`
-		Deals                struct {
-			CampaignSource string  `json:"Campaign_Source,omitempty"`
-			DealName       string  `json:"Deal_Name,omitempty"`
-			ClosingDate    string  `json:"Closing_Date,omitempty"`
-			Stage          string  `json:"Stage,omitempty"`
-			Amount         float64 `json:"Amount,omitempty"`
-		} `json:"Deals,omitempty"`
-	} `json:"data,omitempty"`
+	Data []ConvertLeadDataParameter `json:"data,omitempty"`
+}
+type ConvertLeadDataParameter struct {
+	Overwrite            bool   `json:"overwrite,omitempty"`
+	NotifyLeadOwner      bool   `json:"notify_lead_owner,omitempty"`
+	NotifyNewEntityOwner bool   `json:"notify_new_entity_owner,omitempty"`
+	Accounts             string `json:"Accounts,omitempty"`
+	Contacts             string `json:"Contacts,omitempty"`
+	AssignTo             string `json:"assign_to,omitempty"`
+	Deals                struct {
+		CampaignSource string  `json:"Campaign_Source,omitempty"`
+		DealName       string  `json:"Deal_Name,omitempty"`
+		ClosingDate    string  `json:"Closing_Date,omitempty"`
+		Stage          string  `json:"Stage,omitempty"`
+		Amount         float64 `json:"Amount,omitempty"`
+	} `json:"Deals,omitempty"`
 }
 
 // ConvertLeadResponse is the data returned by ConvertLead
