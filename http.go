@@ -27,9 +27,7 @@ type Parameter string
 
 // HTTPRequest is the function which actually performs the request to a Zoho endpoint as specified by the provided endpoint
 func (z *Zoho) HTTPRequest(endpoint *Endpoint) (err error) {
-	defer func() {
-		log.Println("Response Data", endpoint.ResponseData)
-	}()
+
 	if reflect.TypeOf(endpoint.ResponseData).Kind() != reflect.Ptr {
 		return fmt.Errorf("Failed, you must pass a pointer in the ResponseData field of endpoint")
 	}
@@ -76,6 +74,7 @@ func (z *Zoho) HTTPRequest(endpoint *Endpoint) (err error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	defer func() {
 		log.Println("Response Data Bytes", string(body))
+		log.Println("Endpoint URL", endpointURL)
 	}()
 	if err != nil {
 		return fmt.Errorf("Failed to read body of response for %s: got status %s: %s", endpoint.Name, resolveStatus(resp), err)
@@ -87,7 +86,9 @@ func (z *Zoho) HTTPRequest(endpoint *Endpoint) (err error) {
 	}
 
 	endpoint.ResponseData = data
-
+	defer func() {
+		log.Println("Response Data", endpoint.ResponseData)
+	}()
 	return nil
 }
 
