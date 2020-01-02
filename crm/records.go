@@ -3,6 +3,7 @@ package crm
 import (
 	"fmt"
 	zoho "github.com/beatscode/Zoho"
+	"log"
 	"time"
 )
 
@@ -55,6 +56,7 @@ func (c *API) InsertRecords(request InsertRecordsData, module crmModule) (data I
 
 	err = c.Zoho.HTTPRequest(&endpoint)
 	if err != nil {
+		log.Println(endpoint.ResponseData)
 		return InsertRecordsResponse{}, fmt.Errorf("Failed to insert records of %s: %s", module, err)
 	}
 
