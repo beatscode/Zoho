@@ -56,7 +56,7 @@ func (c *API) InsertRecords(request InsertRecordsData, module crmModule) (data I
 
 	err = c.Zoho.HTTPRequest(&endpoint)
 	if err != nil {
-		log.Println(endpoint.ResponseData)
+		log.Println("Endpoint", endpoint.ResponseData)
 		return InsertRecordsResponse{}, fmt.Errorf("Failed to insert records of %s: %s", module, err)
 	}
 
