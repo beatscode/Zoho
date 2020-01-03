@@ -361,7 +361,7 @@ func (c *API) SearchRecords(response interface{}, module crmModule, params map[s
 
 	err = c.Zoho.HTTPRequest(&endpoint)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to insert records of %s: %s", module, err)
+		return nil, fmt.Errorf("Failed to search records of %s: %s", module, err)
 	}
 
 	if endpoint.ResponseData != nil {
