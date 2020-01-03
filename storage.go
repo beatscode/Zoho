@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -92,21 +93,21 @@ func (t *TokensWrapper) SetExpiry() {
 
 // CheckExpiry if the token expired before this instant
 func (t *TokensWrapper) CheckExpiry() bool {
+	log.Println("Token Expires in", t.Expires.Format(time.Stamp))
 	return t.Expires.Before(time.Now())
 }
 
 func (z *Zoho) checkForSavedTokens() error {
 	t, err := z.LoadTokens()
-	z.oauth.token = t
-
-	if err != nil && err == ErrTokenExpired {
+	if err != nil && err != ErrTokenExpired {
 		return err
 	}
 
 	if (t != AccessTokenResponse{}) && err != ErrTokenExpired {
+		z.oauth.token = t
 		return nil
 	}
-	return fmt.Errorf("No saved tokens")
+	return err
 }
 
 // DatastoreManager is an example TokenManager that satisfies the TokenManager interface

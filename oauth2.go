@@ -69,14 +69,19 @@ func (z *Zoho) RefreshTokenRequest() (err error) {
 // and click the kebab icon beside your clienID, and click 'Self-Client'; then you can define you scopes and an expiry, then provide the generated authorization code
 // to this function which will generate your access token and refresh tokens.
 func (z *Zoho) GenerateTokenRequest(clientID, clientSecret, code, redirectURI string) (err error) {
-
 	z.oauth.clientID = clientID
 	z.oauth.clientSecret = clientSecret
 	z.oauth.redirectURI = redirectURI
-
 	err = z.checkForSavedTokens()
+	if err == nil {
+		return nil
+	}
 	if err == ErrTokenExpired {
-		return z.RefreshTokenRequest()
+		z.oauth.token.RefreshToken = code
+		refreshTokenError := z.RefreshTokenRequest()
+		if refreshTokenError == nil {
+			return nil
+		}
 	}
 
 	q := url.Values{}
