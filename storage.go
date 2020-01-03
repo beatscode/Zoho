@@ -99,12 +99,12 @@ func (t *TokensWrapper) CheckExpiry() bool {
 
 func (z *Zoho) checkForSavedTokens() error {
 	t, err := z.LoadTokens()
+	z.oauth.token = t
 	if err != nil && err != ErrTokenExpired {
 		return err
 	}
 
 	if (t != AccessTokenResponse{}) && err != ErrTokenExpired {
-		z.oauth.token = t
 		return nil
 	}
 	return err

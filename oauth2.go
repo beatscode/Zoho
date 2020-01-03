@@ -77,7 +77,6 @@ func (z *Zoho) GenerateTokenRequest(clientID, clientSecret, code, redirectURI st
 		return nil
 	}
 	if err == ErrTokenExpired {
-		z.oauth.token.RefreshToken = code
 		refreshTokenError := z.RefreshTokenRequest()
 		if refreshTokenError == nil {
 			return nil
